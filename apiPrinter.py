@@ -28,7 +28,26 @@ async def get_printer():
 async def print_printer():
     printer.print()
     return {
-        "printer": f"print {printer.get_card_in_spooler()}"
+        "printer": f"print"
+    }
+
+
+@app.post("/v1/printer/spooler/{card_id}", status_code=200)
+async def print_printer(card_id):
+    if printer.send_card_to_spooler(card_id):
+        return {
+            'spooler': f'add {card_id}'
+        }
+    else:
+        return {
+            'result': 'failure'
+        }
+
+
+@app.get("/v1/printer/spooler", status_code=200)
+async def print_printer():
+    return {
+        "spooler": f"{printer.get_spooler()}"
     }
 
 

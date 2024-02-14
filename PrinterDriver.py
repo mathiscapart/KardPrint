@@ -49,6 +49,9 @@ class PrinterDriver:
     def get_card_in_spooler(self):
         return self.spooler[0]
 
+    def get_spooler(self):
+        return self.spooler
+
     def get_ink_levels(self):
         return self.ink_level
 
@@ -58,7 +61,7 @@ class PrinterDriver:
             return False
         else:
             card = self.spooler[0]
-            self.spooler.remove(self.spooler[0])
+            self.spooler.pop(0)
 
         # si on enlève 1 papier est ce qu'il en reste
         if self.card_tray - 1 < 0:
