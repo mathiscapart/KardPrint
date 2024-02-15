@@ -24,30 +24,37 @@ async def get_printer():
     return printer.get_printer_info()
 
 
+@app.get("/v1/printer/ink", status_code=200)
+async def get_printer():
+    return printer.get_ink_levels()
+
+
 @app.post("/v1/printer/print", status_code=200)
 async def print_printer():
     printer.print()
     return {
-        "printer": f"print"
+        "printer": "print"
     }
 
 
 @app.post("/v1/printer/spooler/{card_id}", status_code=200)
-async def print_printer(card_id):
-    if printer.send_card_to_spooler(card_id):
+async def print_printer(card_id, response: Response):
+    try:
+        if printer.send_card_to_spooler(card_id):
+            return {
+                'spooler': f'add {card_id}'
+            }
+    except Exception as e:
+        response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
         return {
-            'spooler': f'add {card_id}'
-        }
-    else:
-        return {
-            'result': 'failure'
+            'result': f'{e}'
         }
 
 
-@app.get("/v1/printer/spooler", status_code=200)
+@app.get("/v1/printer/spooler/first", status_code=200)
 async def print_printer():
     return {
-        "spooler": f"{printer.get_spooler()}"
+        "spooler": f"{printer.get_card_in_spooler()}"
     }
 
 

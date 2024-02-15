@@ -42,9 +42,8 @@ class PrinterDriver:
         for spool in self.spooler:
             if spool == card_number:
                 raise InvalidCardException('Card is already in spooler')
-            else:
-                self.spooler.append(card_number)
-                return True
+        self.spooler.append(card_number)
+        return True
 
     def get_card_in_spooler(self):
         return self.spooler[0]

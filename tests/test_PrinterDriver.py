@@ -74,3 +74,13 @@ def test_print_Ink_Level_at_zero():
 def test_print_spooler_null():
     printer.print()
     assert not printer.print()
+
+
+def test_get_card_in_spooler_zero():
+    printer_test = Pr("Xerox Printer", "1200", "plastic", 10, 2)
+    assert printer_test.get_card_in_spooler() == "933"
+
+
+def test_get_spooler():
+    printer_test = Pr("Xerox Printer", "1200", "plastic", 10, 2)
+    assert printer_test.get_spooler() == ["933"]
