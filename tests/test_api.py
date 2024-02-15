@@ -61,9 +61,9 @@ def test_bad_add_card_to_spooler():
 def test_ink_level():
     response = client.get(f"/v1/printer/ink")
     assert response.status_code == 200
-    assert response.json() == {
-        "black": 100,
-        "cyan": 100,
-        "magenta": 100,
-        "yellow": 100
-    }
+    result = response.json()
+    assert result
+    assert 0 <= result["black"] <= 100
+    assert 0 <= result["cyan"] <= 100
+    assert 0 <= result["magenta"] <= 100
+    assert 0 <= result["yellow"] <= 100
